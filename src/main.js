@@ -20,3 +20,21 @@ if(!tags.includes('popular')){
 return {name, price, quantity,tags, available};
 }
 console.log(createProduct('Навушники', 2500, 8, 'audio,wireless'));
+
+//Етап 2 — Додавання товару до каталогу
+
+const products = [];
+
+function addProduct(products, name, price, quantity, tagsString) {
+  const product = createProduct(name, price, quantity, tagsString);
+
+  products.push(product);
+
+  return product;
+}
+
+addProduct(products, 'Ноутбук', 32000, 4, 'tech,work');
+addProduct(products, 'Навушники', 2500, 8, 'audio,wireless');
+addProduct(products, 'Миша', 1200, 3, 'gaming');
+
+console.log(products);

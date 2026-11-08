@@ -128,3 +128,124 @@ console.log(products);
 //     tags: ['gaming', 'popular']
 //   }
 // ]
+
+//#region  TASK-5
+// Створіть об’єкт store із двома властивостями:
+
+// products — посилання на створений раніше масив products;
+// orders — порожній масив.
+
+// Додайте до store метод createOrder(customer, ...requests). Завдяки rest параметр requests збере всі запити на товари в один масив.
+
+// Метод повинен:
+// створити порожній масив items і змінну total зі значенням 0;
+// перебрати requests циклом for...of;
+// для кожного запиту викликати createOrderItem();
+// пропустити результат null, а готову позицію додати до items;
+// додати вартість кожної готової позиції до total;
+// повернути null, якщо не вдалося створити жодної позиції;
+// сформувати об’єкт замовлення з властивостями customer, items, total і status зі значенням new;
+// додати копію замовлення до this.orders за допомогою spread;
+// повернути створене замовлення.
+
+const store = {
+  products,
+  orders: [],
+  createOrder(customer, ...requests) {
+    const items = [];
+    let total = 0;
+
+    for (const request of requests) {
+      const addItem = createOrderItem(
+        products,
+        request.productName,
+        request.quantity
+      );
+
+      if (addItem !== null) {
+        items.push(addItem);
+        total = addItem.price * request.quantity;
+      }
+    }
+
+    if (items.length === 0) {
+      return null;
+    }
+
+    const customerOrder = {
+      customer,
+      items,
+      total,
+      status: 'new',
+    };
+
+    this.orders.push(customerOrder);
+
+    return customerOrder;
+  },
+};
+
+const order = store.createOrder(
+  'Олена',
+  { productName: 'Навушники', quantity: 2 },
+  { productName: 'Миша', quantity: 1 }
+);
+
+console.log(order);
+// {
+//   customer: 'Олена',
+//   items: [
+//     {
+//       name: 'Навушники',
+//       price: 2500,
+//       quantity: 2,
+//       total: 5000
+//     }
+//   ],
+//   total: 5000,
+//   status: 'new'
+// }
+
+console.log(store.orders);
+// [
+//   {
+//     customer: 'Олена',
+//     items: [
+//       {
+//         name: 'Навушники',
+//         price: 2500,
+//         quantity: 2,
+//         total: 5000,
+//       },
+//     ],
+//     total: 5000,
+//     status: 'new',
+//   },
+// ];
+
+console.log(store.products);
+// [
+//   {
+//     name: 'Ноутбук',
+//     price: 32000,
+//     quantity: 4,
+//     available: true,
+//     tags: ['tech', 'work', 'popular']
+//   },
+//   {
+//     name: 'Навушники',
+//     price: 2500,
+//     quantity: 4,
+//     available: true,
+//     tags: ['audio', 'wireless', 'popular']
+//   },
+//   {
+//     name: 'Миша',
+//     price: 1200,
+//     quantity: 0,
+//     available: false,
+//     tags: ['gaming', 'popular']
+//   }
+// ]
+
+//#endregion

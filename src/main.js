@@ -157,14 +157,14 @@ const store = {
 
     for (const request of requests) {
       const addItem = createOrderItem(
-        products,
+        this.products,
         request.productName,
         request.quantity
       );
 
       if (addItem !== null) {
         items.push(addItem);
-        total = addItem.price * request.quantity;
+        total += addItem.total;
       }
     }
 
@@ -179,7 +179,7 @@ const store = {
       status: 'new',
     };
 
-    this.orders.push(customerOrder);
+    this.orders.push(Object.assign({}, customerOrder));
 
     return customerOrder;
   },
